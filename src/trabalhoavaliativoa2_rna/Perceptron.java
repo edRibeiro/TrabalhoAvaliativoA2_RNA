@@ -10,18 +10,19 @@ package trabalhoavaliativoa2_rna;
  * @author Tarcisio
  */
 public class Perceptron {
+
     private int[][] xa;//entradas
     private int[][] xb;//entradas
     private double[] wa;//peso
     private double[] wb;//peso
     private double[] wc;//peso
-    private int[]da;//desejavel
-    private int[]db;//desejavel
-    private int[]dc;//desejavel
+    private int[] da;//desejavel
+    private int[] db;//desejavel
+    private int[] dc;//desejavel
     private double a, e;
     private int max_int;
 
-    public Perceptron(int[][] x, double[] w, int[] d, double a, double e, int max_int) {
+    /*public Perceptron(int[][] x, double[] w, int[] d, double a, double e, int max_int) {
         this.x = x;//entradas
         this.w = w;//peso
         this.d = d;//desejavel
@@ -29,77 +30,136 @@ public class Perceptron {
         this.e = e;//margem de erro
         
         this.max_int = max_int;
+    }*/
+    public Perceptron(int[][] xa, int[][] xb, double[] wa, double[] wb, double[] wc, int[] da, int[] db, int[] dc, double a, double e, int max_int) {
+        this.xa = xa;
+        this.xb = xb;
+        this.wa = wa;
+        this.wb = wb;
+        this.wc = wc;
+        this.da = da;
+        this.db = db;
+        this.dc = dc;
+        this.a = a;
+        this.e = e;
+        this.max_int = max_int;
     }
-    
-    public void treinar(){
-        
-        int[]ya=new int[4];//saida
-        int[]yb=new int[4];//saida
-        double ua=0;
-        double ub=0;
-        double uc=0;
-        int epocas=0,y=0,ordem=0;
-        boolean continua=true;
-        while ((epocas<this.max_int)&&(continua)){
-            continua=false;
-            for (int i=0;i<this.x[0].length;i++){
+
+    public void treinar() {
+
+        int[] ya = new int[4];//saida
+        int[] yb = new int[4];//saida
+        double ua = 0;
+        double ub = 0;
+        double uc = 0;
+        int epocas = 0, yc = 0, ordem = 0;
+        boolean continua = true;
+        while ((epocas < this.max_int) && (continua)) {
+            continua = false;
+            System.out.println("Época = "+epocas+"\n");
+            for (int i = 0; i < this.xa[0].length; i++) {
                 //x1*w1+x2*w2+w0 
-                ua=this.x[0][i]*this.w[0] + this.x[1][i]*this.w[1] + this.w[2];
-                
-                //Calculando a saída
-                if (ua>=0){
-                    ya[i]=1;
-                }else{
-                    ya[i]=0;
-                }
-                //Calculando a saída
-                if (ub>=0){
-                    yb[i]=1;
-                }else{
-                    yb[i]=0;
-                }
-                
-                uc=ya[i]*this.w[0] + yb[i]*this.w[1] + this.w[2];
+                ua = this.xa[0][i] * this.wa[0] + this.xa[1][i] * this.wa[1] + this.wa[2];
 
                 //Calculando a saída
-                if (uc>=0){
-                    y=1;
-                }else{
-                    y=0;
+                if (ua >= 0) {
+                    ya[i] = 1;
+                } else {
+                    ya[i] = 0;
                 }
-                
+
                 //Mostrando a aprendizagem
-                System.out.println("(" + this.x[0][i] + 
-                        "  ," + this.x[1][i] + 
-                        ")  ="+y  +
-                        "  w1="+ this.w[0] +
-                         "  w2=" + this.w[1] +
-                          "  w0=" + this.w[2]);
-                
+                System.out.println("A: (" + this.xa[0][i]
+                        + "  ," + this.xa[1][i]
+                        + ")  =" + ya[i]
+                        + "  wa_1=" + this.wa[0]
+                        + "  wa_2=" + this.wa[1]
+                        + "  wa_0=" + this.wa[2]);
+
                 //Comparando a saída obtida com a desejável
-                if((y==1)&&(this.d[i]==0)){
-                    ajustar_pesos(false,ordem); //Deve diminuir os pesos
+                if ((ya[i] == 1) && (this.da[i] == 0)) {
+                    ajustar_pesos(false, this.wa, ordem); //Deve diminuir os pesos
                     ordem++;
-                    continua=true;
-                }else if ((y==0)&&(this.d[i]==1)){
-                    ajustar_pesos(true,ordem); //Deve aumentar os pesos
+                    continua = true;
+                } else if ((ya[i] == 0) && (this.da[i] == 1)) {
+                    ajustar_pesos(true, this.wa, ordem); //Deve aumentar os pesos
                     ordem++;
-                    continua=true;
+                    continua = true;
                 }
-                if (ordem>=this.w.length){
-                    ordem=0;
+                if (ordem >= this.wa.length) {
+                    ordem = 0;
+                }
+
+                ub = this.xb[0][i] * this.wb[0] + this.xb[1][i] * this.wb[1] + this.wb[2];
+                //Calculando a saída
+                if (ub >= 0) {
+                    yb[i] = 1;
+                } else {
+                    yb[i] = 0;
+                }
+                //Mostrando a aprendizagem
+                System.out.println("B: (" + this.xb[0][i]
+                        + "  ," + this.xb[1][i]
+                        + ")  =" + yb[i]
+                        + "  w_1=" + this.wb[0]
+                        + "  w_2=" + this.wb[1]
+                        + "  w_0=" + this.wb[2]);
+
+                //Comparando a saída obtida com a desejável
+                if ((yb[i] == 1) && (this.db[i] == 0)) {
+                    ajustar_pesos(false, this.wb, ordem); //Deve diminuir os pesos
+                    ordem++;
+                    continua = true;
+                } else if ((yb[i] == 0) && (this.db[i] == 1)) {
+                    ajustar_pesos(true, this.wb, ordem); //Deve aumentar os pesos
+                    ordem++;
+                    continua = true;
+                }
+                if (ordem >= this.wb.length) {
+                    ordem = 0;
+                }
+
+                uc = ya[i] * this.wc[0] + yb[i] * this.wc[1] + this.wc[2];
+
+                //Calculando a saída
+                if (uc >= 0) {
+                    yc = 1;
+                } else {
+                    yc = 0;
+                }
+
+                //Mostrando a aprendizagem
+                System.out.println("C: (" + ya[i]
+                        + "  ," + yb[i]
+                        + ")  =" + yc
+                        + "  w_1=" + this.wc[0]
+                        + "  w_2=" + this.wc[1]
+                        + "  w_0=" + this.wc[2]);
+
+                //Comparando a saída obtida com a desejável
+                if ((yc == 1) && (this.dc[i] == 0)) {
+                    ajustar_pesos(false, this.wc, ordem); //Deve diminuir os pesos
+                    ordem++;
+                    continua = true;
+                } else if ((yc == 0) && (this.dc[i] == 1)) {
+                    ajustar_pesos(true, this.wc, ordem); //Deve aumentar os pesos
+                    ordem++;
+                    continua = true;
+                }
+                if (ordem >= this.wc.length) {
+                    ordem = 0;
                 }
             }
             System.out.println("_____________________________");
-           epocas++;
+            epocas++;
         }
     }
-    
-    private void ajustar_pesos(boolean aumentar, int ordem){
-        if (aumentar){
-            this.w[ordem]+=this.a;
-        }else{
-            this.w[ordem]-=this.a;
+
+    private void ajustar_pesos(boolean aumentar, double [] pesos, int ordem) {
+        if (aumentar) {
+            pesos[ordem] += this.a;
+        } else {
+            pesos[ordem] -= this.a;
         }
     }
 }

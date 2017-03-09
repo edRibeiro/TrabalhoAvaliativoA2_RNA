@@ -30,6 +30,9 @@ public class TrabalhoAvaliativoA2_RNA {
         double []wc={0.5,0.3,-0.6};
         int []dc= {0,1,1,1};
         
+        Perceptron p = new Perceptron(xa, xb, wa, wb, wc, da, db, dc, 0.1, 0, 100);
+        p.treinar();
+        
         
 
     }
