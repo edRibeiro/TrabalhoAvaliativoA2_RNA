@@ -7,7 +7,7 @@ package trabalhoavaliativoa2_rna;
 
 /**
  *
- * @author Tarcisio
+ * @author Ederson
  */
 public class Perceptron {
 
@@ -19,7 +19,7 @@ public class Perceptron {
     private int[] da;//desejavel
     private int[] db;//desejavel
     private int[] dc;//desejavel
-    private double a, e;
+    private double a;
     private int max_int;
 
     /*public Perceptron(int[][] x, double[] w, int[] d, double a, double e, int max_int) {
@@ -31,7 +31,7 @@ public class Perceptron {
         
         this.max_int = max_int;
     }*/
-    public Perceptron(int[][] xa, int[][] xb, double[] wa, double[] wb, double[] wc, int[] da, int[] db, int[] dc, double a, double e, int max_int) {
+    public Perceptron(int[][] xa, int[][] xb, double[] wa, double[] wb, double[] wc, int[] da, int[] db, int[] dc, double a, int max_int) {
         this.xa = xa;
         this.xb = xb;
         this.wa = wa;
@@ -41,7 +41,7 @@ public class Perceptron {
         this.db = db;
         this.dc = dc;
         this.a = a;
-        this.e = e;
+      
         this.max_int = max_int;
     }
 
@@ -69,9 +69,10 @@ public class Perceptron {
                 }
 
                 //Mostrando a aprendizagem
-                System.out.println("A: (" + this.xa[0][i]
+                System.out.println("A: entrada"+i+"(" + this.xa[0][i]
                         + "  ," + this.xa[1][i]
-                        + ")  =" + ya[i]
+                        + ") u="+ua
+                        + " y=" + ya[i]
                         + "  wa_1=" + this.wa[0]
                         + "  wa_2=" + this.wa[1]
                         + "  wa_0=" + this.wa[2]);
@@ -79,10 +80,12 @@ public class Perceptron {
                 //Comparando a saída obtida com a desejável
                 if ((ya[i] == 1) && (this.da[i] == 0)) {
                     ajustar_pesos(false, this.wa, ordem); //Deve diminuir os pesos
+                    System.out.printf("Correção dos pesos de 0.1 para baixo  A{ %f, %f, %f}\n", wa[0],wa[1],wa[2]);
                     ordem++;
                     continua = true;
                 } else if ((ya[i] == 0) && (this.da[i] == 1)) {
                     ajustar_pesos(true, this.wa, ordem); //Deve aumentar os pesos
+                    System.out.printf("Correção dos pesos de 0.1 para cima  A{ %f, %f, %f}\n", wa[0],wa[1],wa[2]);
                     ordem++;
                     continua = true;
                 }
@@ -98,9 +101,10 @@ public class Perceptron {
                     yb[i] = 0;
                 }
                 //Mostrando a aprendizagem
-                System.out.println("B: (" + this.xb[0][i]
+                System.out.println("B: entrada"+i+"(" + this.xb[0][i]
                         + "  ," + this.xb[1][i]
-                        + ")  =" + yb[i]
+                        + ") u= "+ub
+                        + " y=" + yb[i]
                         + "  w_1=" + this.wb[0]
                         + "  w_2=" + this.wb[1]
                         + "  w_0=" + this.wb[2]);
@@ -108,10 +112,12 @@ public class Perceptron {
                 //Comparando a saída obtida com a desejável
                 if ((yb[i] == 1) && (this.db[i] == 0)) {
                     ajustar_pesos(false, this.wb, ordem); //Deve diminuir os pesos
+                    System.out.printf("Correção dos pesos de 0.1 para baixo  B{ %f, %f, %f}\n", wb[0],wb[1],wb[2]);
                     ordem++;
                     continua = true;
                 } else if ((yb[i] == 0) && (this.db[i] == 1)) {
                     ajustar_pesos(true, this.wb, ordem); //Deve aumentar os pesos
+                    System.out.printf("Correção dos pesos de 0.1 para cima  B{ %f, %f, %f}\n", wb[0],wb[1],wb[2]);
                     ordem++;
                     continua = true;
                 }
@@ -129,9 +135,10 @@ public class Perceptron {
                 }
 
                 //Mostrando a aprendizagem
-                System.out.println("C: (" + ya[i]
+                System.out.println("C: entrada"+i+"(" + ya[i]
                         + "  ," + yb[i]
-                        + ")  =" + yc
+                        + ") u="+uc
+                        + "  y=" + yc
                         + "  w_1=" + this.wc[0]
                         + "  w_2=" + this.wc[1]
                         + "  w_0=" + this.wc[2]);
@@ -139,10 +146,12 @@ public class Perceptron {
                 //Comparando a saída obtida com a desejável
                 if ((yc == 1) && (this.dc[i] == 0)) {
                     ajustar_pesos(false, this.wc, ordem); //Deve diminuir os pesos
+                    System.out.printf("Correção dos pesos de 0.1 para baixo  C{ %f, %f, %f}\n", wc[0],wc[1],wc[2]);
                     ordem++;
                     continua = true;
                 } else if ((yc == 0) && (this.dc[i] == 1)) {
                     ajustar_pesos(true, this.wc, ordem); //Deve aumentar os pesos
+                    System.out.printf("Correção dos pesos de 0.1 para cima  C{ %f, %f, %f}\n", wc[0],wc[1],wc[2]);
                     ordem++;
                     continua = true;
                 }
@@ -152,6 +161,11 @@ public class Perceptron {
             }
             System.out.println("_____________________________");
             epocas++;
+        }
+        if(epocas<max_int){
+            System.out.printf("W de A{ %f, %f, %f}\n", wa[0],wa[1],wa[2]);
+            System.out.printf("W de B{ %f, %f, %f}\n", wb[0],wb[1],wb[2]);
+            System.out.printf("W de C{ %f, %f, %f}\n", wc[0],wc[1],wc[2]);
         }
     }
 
