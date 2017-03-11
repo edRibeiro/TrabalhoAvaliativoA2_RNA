@@ -69,6 +69,7 @@ public class Perceptron {
                 }
 
                 //Mostrando a aprendizagem
+                System.out.printf("Pa: Entrada %d %d, Saída y=%d, w1=%d x %f, w2=%d x %f, w0=%f  u=%f  %s\n", this.xa[0][i],this.xa[1][i], ya[i], this.xa[0][i],this.wa[0],this.xa[1][i],this.wa[1], this.wa[2], ua, (ya[i]==da[i])? "correto":"incorreto");
                 System.out.println("A: entrada"+i+"(" + this.xa[0][i]
                         + "  ," + this.xa[1][i]
                         + ") u="+ua
@@ -101,6 +102,7 @@ public class Perceptron {
                     yb[i] = 0;
                 }
                 //Mostrando a aprendizagem
+                System.out.printf("Pb: Entrada %d %d, Saída y=%d, w1=%d x %f, w2=%d x %f, w0=%f  u=%f  %s\n", this.xb[0][i],this.xb[1][i], yb[i], this.xb[0][i],this.wb[0],this.xb[1][i],this.wb[1], this.wb[2], ub, (yb[i]==db[i])? "correto":"incorreto");
                 System.out.println("B: entrada"+i+"(" + this.xb[0][i]
                         + "  ," + this.xb[1][i]
                         + ") u= "+ub
@@ -135,6 +137,7 @@ public class Perceptron {
                 }
 
                 //Mostrando a aprendizagem
+                System.out.printf("Pc: Entrada %d %d, Saída y=%d, w1=%d x %f, w2=%d x %f, w0=%f  u=%f  %s\n", this.xa[0][i],this.xa[1][i], ya[i], ya[i],this.wc[0],yb[i],this.wc[1], this.wc[2], uc, (yc==dc[i])? "correto":"incorreto");
                 System.out.println("C: entrada"+i+"(" + ya[i]
                         + "  ," + yb[i]
                         + ") u="+uc
