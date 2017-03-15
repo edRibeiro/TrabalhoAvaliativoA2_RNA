@@ -19,11 +19,11 @@ public class TrabalhoAvaliativoA2_RNA {
     public static void main(String[] args) {
         // TODO code application logic here
         int[][] xa = {{1, 1, 0, 0}, {0, 1, 0, 1}};
-        double[] wa = {0.5, 0.3, -0.1};
+        double[] wa = {0.5, 0.3, -0.6};
         int[] da = {0, 1, 0, 1};
 
         int[][] xb = {{0, 0, 1, 1}, {1, 0, 1, 0}};
-        double[] wb = {0.5, 0.3, -0.6};
+        double[] wb = {0.5, -0.2, -0.6};
         int[] db = {0, 0, 1, 0};
 
 //        int [][]xc = {ya,yb};
@@ -71,11 +71,11 @@ public class TrabalhoAvaliativoA2_RNA {
 //        PerceptronPorReforco pf_a;
 //        PerceptronPorReforco pf_b;
 //        PerceptronPorReforco pf_c;
-        int [][] pfa = {{1, 1, 0, 0}, {0, 1, 0, 1}, {1,1,1,1}};
+        int[][] pfa = {{1, 1, 0, 0}, {0, 1, 0, 1}, {1, 1, 1, 1}};
 //        double[] pfwa = {0.5, 0.3, -0.1};
 //        pf_a=new PerceptronPorReforco("A", pfa, pfwa, a);
 //        t.setA(pf_a);
-        int[][] pfb = {{0, 0, 1, 1}, {1, 0, 1, 0}, {1, 1, 1, 1}};        
+        int[][] pfb = {{0, 0, 1, 1}, {1, 0, 1, 0}, {1, 1, 1, 1}};
 //        double[] pfwb = {0.5, 0.3, -0.6};
 //        pf_b=new PerceptronPorReforco("B", pfb, pfwb, a);
 //        t.setB(pf_b);
@@ -84,8 +84,13 @@ public class TrabalhoAvaliativoA2_RNA {
 //        pf_c.setDesejavel(dc);
 //        t.setC(pf_c);
 //        t.treinar(1000);
-        MultiNeuronsPerceptronPorReforco mp = new MultiNeuronsPerceptronPorReforco(pfa, pfb, wa, wb, wc, a, dc);
-        mp.treinar(100);
+
+        
+        double[] wa1 = {0.5, 0.3, -0.6};
+        double[] wb1 = {0.5, -0.2, -0.6};
+        double[] wc1 = {0.5, 0.3, -0.6};
+        MultiNeuronsPerceptronPorReforco mp = new MultiNeuronsPerceptronPorReforco(pfa, pfb, wa1, wb1, wc1, a, dc);
+        mp.treinar(1000);
 
     }
 

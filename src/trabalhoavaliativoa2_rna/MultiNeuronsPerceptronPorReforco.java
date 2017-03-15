@@ -36,70 +36,74 @@ public class MultiNeuronsPerceptronPorReforco {
         this.yb = new int[4];
         this.yc = new int[4];
         this.dc = dc;
+        
     }
 
     public void treinar(int max) {
         boolean continua = true;
         int epoca = 0, peso = 0, col = 0;
         boolean[] erro = new boolean[4];
-        while (continua && epoca < max) {            
+        while (continua && epoca < max) {
+            continua = false;
+            System.out.printf("\nÉpoca %d:\n",epoca);
+            System.out.println("A: " + Arrays.toString(wa) + "\nB: " + Arrays.toString(wb)+"\nC: " + Arrays.toString(wc));
             for (int i = 0; i < 4; i++) {
-                continua = false;
+                System.out.printf("\nEntrada %d.\n",i);
                 double ua = 0.0, ub = 0.0, uc = 0.0;
-                for (int j = 0; j < xa.length; j++) {
-                    ua += xa[j][i] * wa[j];
-                }
+                //for (int j = 0; j < xa.length; j++) {
+                    ua = (xa[0][i] * wa[0])+(xa[1][i] * wa[1])+wa[2];
+                //}
                 ya[i] = f(ua);
-                for (int j = 0; j < xb.length; j++) {
-                    ua += xb[j][i] * wb[j];
-                }
+               /// for (int j = 0; j < xb.length; j++) {
+                    ub = (xb[0][i] * wb[0])+(xb[1][i] * wb[1])+wb[2];
+               // }
                 yb[i] = f(ub);
 
                 uc = ya[i] * wc[0] + yb[i] * wc[1] + wc[2];
                 yc[i] = f(uc);
                 int e;
-                System.out.println("yc:"+Arrays.toString(yc));
-                System.out.println("dc:"+Arrays.toString(dc));
+                System.out.println("yc:" + Arrays.toString(yc));
+                System.out.println("dc:" + Arrays.toString(dc));
                 e = dc[i] - yc[i];
                 if (e != 0) {
-                    continua=true;
+                    continua = true;
                     switch (peso) {
                         case 0:
-                            System.out.println("de wc:"+Arrays.toString(wc));
+                            System.out.println("de wc:" + Arrays.toString(wc));
                             wc[col] += a * e;
-                            System.out.println("Para dc:"+Arrays.toString(wc));
+                            System.out.println("Para dc:" + Arrays.toString(wc));
                             col++;
                             break;
-                        case 1:                            
-                            System.out.println("de wa:"+Arrays.toString(wa));
+                        case 1:
+                            System.out.println("de wa:" + Arrays.toString(wa));
                             wc[col] += a * e;
-                            System.out.println("Para wa:"+Arrays.toString(wa));
+                            System.out.println("Para wa:" + Arrays.toString(wa));
                             col++;
                             break;
-                        case 2:                            
-                            System.out.println("de wb:"+Arrays.toString(wb));
+                        case 2:
+                            System.out.println("de wb:" + Arrays.toString(wb));
                             wc[col] += a * e;
-                            System.out.println("Para wb:"+Arrays.toString(wb));
+                            System.out.println("Para wb:" + Arrays.toString(wb));
                             col++;
                             break;
                         default:
                             break;
                     }
-                    if (col >= 4) {
+                    if (col >= 3) {
                         col = 0;
                         peso++;
-                        if (peso >= 3) {
-                            peso = 0;
-                        }
                     }
 
+                    if (peso >= 3) {
+                        peso = 0;
+                    }
                 }
             }
             epoca++;
         }
-        System.out.println("Quantidade de epocas percorridas: "+epoca);
-        System.out.println("C: " + Arrays.toString(wc) + "\nA: " + Arrays.toString(wa) + "\nB: " + Arrays.toString(wb));
-    
+        System.out.println("Quantidade de epocas percorridas: " + epoca);
+        System.out.println("A: " + Arrays.toString(wa) + "\nB: " + Arrays.toString(wb)+"\nC: " + Arrays.toString(wc));
+
     }
 
     private int f(double u) {
